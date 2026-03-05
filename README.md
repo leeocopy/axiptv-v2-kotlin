@@ -9,8 +9,9 @@ Professional Android TV IPTV application with a companion Ktor backend.
 - [/scripts](file:///c:/Users/PC/Desktop/200/web/axiptv-v2-kotlin/scripts) — Maintenance & SQL Helpers
 
 ## Quick Links
-- [Skill Guide](file:///c:/Users/PC/Desktop/200/web/axiptv-v2-kotlin/docs/SKILL_GUIDE.md)
+- [Skill Guide](file:///c:/Users/PC/Desktop/200/web/axiptv-v2-kotlin/docs/skill.md)
 - [Architecture](file:///c:/Users/PC/Desktop/200/web/axiptv-v2-kotlin/docs/ARCHITECTURE.md)
+- [UI Guide](file:///c:/Users/PC/Desktop/200/web/axiptv-v2-kotlin/docs/UI_GUIDE.md)
 - [API Contract](file:///c:/Users/PC/Desktop/200/web/axiptv-v2-kotlin/docs/API_CONTRACT.md)
 
 ## Tech Stack
