@@ -1,0 +1,42 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: 'gradle'
+
+    - name: Grant execute permission for gradlew
+      run: |
+        if [ -f "backend/gradlew" ]; then
+          chmod +x backend/gradlew
+        fi
+
+    - name: Build and Test
+      working-directory: backend
+      run: |
+        if [ -f "gradlew" ]; then
+          ./gradlew build
+        else
+          # Fallback if wrapper not yet committed
+          gradle build
+        fi
