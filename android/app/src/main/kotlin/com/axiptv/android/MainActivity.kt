@@ -16,17 +16,25 @@ import com.axiptv.android.ui.activation.ActivationOverlayScreen
 import com.axiptv.android.ui.splash.SplashScreen
 import dagger.hilt.android.AndroidEntryPoint
 
+import androidx.compose.runtime.CompositionLocalProvider
+import com.axiptv.android.util.DeviceType
+import com.axiptv.android.util.LocalDeviceType
+import com.axiptv.android.util.rememberDeviceType
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val deviceType = rememberDeviceType()
             AxIptvTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = Color.Black
-                ) {
-                    AppNavigation()
+                CompositionLocalProvider(LocalDeviceType provides deviceType) {
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = Color.Black
+                    ) {
+                        AppNavigation()
+                    }
                 }
             }
         }

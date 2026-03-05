@@ -21,6 +21,7 @@ fun SplashScreen(
     viewModel: SplashViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
+    val deviceType = LocalDeviceType.current
 
     LaunchedEffect(state) {
         when (state) {
@@ -37,9 +38,31 @@ fun SplashScreen(
         contentAlignment = Alignment.Center
     ) {
         when (val s = state) {
-            is SplashState.Loading -> CircularProgressIndicator(color = Color.White)
+            is SplashState.Loading -> {
+                if (deviceType == DeviceType.TV) {
+                    SplashContentTv()
+                } else {
+                    SplashContentMobile()
+                }
+            }
             is SplashState.Error -> Text(text = s.message, color = Color.Red)
             else -> {}
         }
+    }
+}
+
+@Composable
+fun SplashContentTv() {
+    Box(contentAlignment = Alignment.Center) {
+        CircularProgressIndicator(color = Color.White, strokeWidth = 8.dp)
+        // Larger TV UI elements here
+    }
+}
+
+@Composable
+fun SplashContentMobile() {
+    Box(contentAlignment = Alignment.Center) {
+        CircularProgressIndicator(color = Color.White, strokeWidth = 4.dp)
+        // More compact Mobile UI elements here
     }
 }
