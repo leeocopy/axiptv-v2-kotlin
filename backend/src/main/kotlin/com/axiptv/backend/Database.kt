@@ -22,10 +22,17 @@ object DevicesTable : Table("devices") {
 
 fun initDatabase() {
     val config = HikariConfig().apply {
-        jdbcUrl = System.getenv("JDBC_URL") ?: "jdbc:postgresql://localhost:5432/axiptv"
+        val dbUrl = System.getenv("DATABASE_URL")
+        if (dbUrl != null) {
+            // Neon/Heroku style: postgres://user:pass@host:port/db
+            // Convert to JDBC: jdbc:postgresql://host:port/db?user=user&password=pass
+            jdbcUrl = dbUrl.replace("postgres://", "jdbc:postgresql://")
+        } else {
+            jdbcUrl = System.getenv("JDBC_URL") ?: "jdbc:postgresql://localhost:5432/axiptv"
+            username = System.getenv("DB_USER") ?: "user"
+            password = System.getenv("DB_PASSWORD") ?: "password"
+        }
         driverClassName = "org.postgresql.Driver"
-        username = System.getenv("DB_USER") ?: "user"
-        password = System.getenv("DB_PASSWORD") ?: "password"
         maximumPoolSize = 10
     }
     val dataSource = HikariDataSource(config)
